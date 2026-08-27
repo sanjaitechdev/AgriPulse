@@ -108,10 +108,28 @@ async function seedProductionDemo() {
       email: 'coimbatore.fresh@demo.com',
       password: DEMO_PASS,
       role: 'buyer',
-      phone: '9840011223',
+      phone: '9123456781',
       isVerified: true,
       profileCompleted: true,
     });
+  }
+
+  // Admin User
+  let admin = await User.findOne({ email: 'admin@demo.com' });
+  if (!admin) {
+    admin = await User.create({
+      name: 'System Administrator',
+      email: 'admin@demo.com',
+      password: DEMO_PASS,
+      role: 'admin',
+      phone: '9999988888',
+      isVerified: true,
+      profileCompleted: true,
+    });
+  } else {
+    admin.role = 'admin';
+    admin.profileCompleted = true;
+    await admin.save();
   }
 
   await BuyerProfile.findOneAndUpdate(
