@@ -124,8 +124,26 @@ app.use(helmet({
 app.use(mongoSanitize());
 
 // CORS
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000',
+  'https://agri-pulse-pied.vercel.app',
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (
+      allowedOrigins.includes(origin) ||
+      /\.vercel\.app$/.test(origin) ||
+      origin.includes('localhost')
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
