@@ -2,10 +2,12 @@ import { io } from 'socket.io-client';
 
 let socket = null;
 
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || (import.meta.env.PROD ? 'https://agripulse-api-b4te.onrender.com' : '/');
+
 export const connectSocket = (userId, role) => {
   if (socket?.connected) return socket;
 
-  socket = io('/', {
+  socket = io(SOCKET_URL, {
     transports: ['websocket', 'polling'],
     autoConnect: true,
   });

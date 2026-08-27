@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://agripulse-api-b4te.onrender.com/api' : '/api');
+
 const api = axios.create({
-  baseURL: '/api',
-  timeout: 15000,
+  baseURL: API_BASE_URL,
+  timeout: 20000,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -46,7 +48,7 @@ api.interceptors.response.use(
 
       try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const { data } = await axios.post('/api/auth/refresh', { refreshToken });
+        const { data } = await axios.post(`${API_BASE_URL}/auth/refresh`, { refreshToken });
         localStorage.setItem('accessToken', data.accessToken);
         refreshQueue.forEach(({ resolve }) => resolve(data.accessToken));
         refreshQueue = [];
