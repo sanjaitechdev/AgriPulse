@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Sprout, Sparkles } from 'lucide-react';
 import useAuthStore from '../../store/authStore';
 import { toast } from 'react-hot-toast';
+import HarvionBrand from '../../components/common/HarvionBrand';
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -52,25 +53,8 @@ export default function LoginPage() {
       <div className="login-hero-left" style={{ flex: 1, maxWidth: 600, paddingRight: 40, color: '#FAF7F2' }}>
         
         {/* Brand Pill */}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-          <div style={{
-            width: 48, height: 48, borderRadius: 12,
-            background: 'rgba(35, 77, 53, 0.85)',
-            border: '1px solid rgba(255, 255, 255, 0.4)',
-            backdropFilter: 'blur(8px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
-          }}>
-            <Sprout size={30} color="#FAF7F2" />
-          </div>
-          <div>
-            <span style={{ color: '#FAF7F2', fontWeight: 800, fontSize: 28, letterSpacing: '-0.02em', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>
-              AgriConnect
-            </span>
-            <div style={{ fontSize: 13, color: '#DDA15E', fontWeight: 600, textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}>
-              Demand-Guided Agricultural Intelligence
-            </div>
-          </div>
+        <div style={{ marginBottom: 28 }}>
+          <HarvionBrand size={56} textColor="#FAF7F2" subtitle="Demand-Guided Agricultural Intelligence & Loss Prevention" />
         </div>
 
         {/* Hero Tagline */}
@@ -129,19 +113,8 @@ export default function LoginPage() {
       }}>
         
         {/* Card Header Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: 'rgba(45, 106, 79, 0.85)', color: '#FAF7F2',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 800, fontSize: 15, border: '1px solid rgba(255, 255, 255, 0.35)',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-          }}>
-            AC
-          </div>
-          <span style={{ fontSize: 19, fontWeight: 800, color: '#FAF7F2', letterSpacing: '-0.01em', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
-            AgriConnect
-          </span>
+        <div style={{ marginBottom: 20 }}>
+          <HarvionBrand size={38} textColor="#FAF7F2" subtitle="Smart Agricultural Intelligence" />
         </div>
 
         <h2 style={{ fontSize: 23, fontWeight: 800, color: '#FAF7F2', marginBottom: 4, textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>

@@ -1,21 +1,25 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Sprout, CheckCircle2 } from 'lucide-react';
+import { Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 import useAuthStore from '../../store/authStore';
 import { toast } from 'react-hot-toast';
+import HarvionBrand from '../../components/common/HarvionBrand';
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', role: 'farmer' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', role: 'farmer', district: '', state: 'Tamil Nadu' });
   const [showPw, setShowPw] = useState(false);
   const { register, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.password.length < 8) { toast.error('Password must be at least 8 characters'); return; }
+    if (!form.name || !form.email || !form.password) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
     const result = await register(form);
     if (result.success) {
-      toast.success('Account created! Let\'s set up your profile.');
+      toast.success('Account created successfully!');
       navigate('/onboarding');
     } else {
       toast.error(result.message);
@@ -23,7 +27,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="login-outer-wrapper" style={{
+    <div className="register-outer-wrapper" style={{
       minHeight: '100vh',
       backgroundImage: 'linear-gradient(180deg, rgba(10, 24, 15, 0.2) 0%, rgba(8, 20, 12, 0.45) 50%, rgba(6, 16, 10, 0.75) 100%), url(/images/farm_bg.jpg)',
       backgroundSize: 'cover',
@@ -36,26 +40,9 @@ export default function RegisterPage() {
     }}>
 
       {/* Left Brand & Mission Visual Area (Desktop Only) */}
-      <div className="login-hero-left" style={{ flex: 1, maxWidth: 580, paddingRight: 40, color: '#FAF7F2' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-          <div style={{
-            width: 48, height: 48, borderRadius: 12,
-            background: 'rgba(35, 77, 53, 0.85)',
-            border: '1px solid rgba(255, 255, 255, 0.4)',
-            backdropFilter: 'blur(8px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
-          }}>
-            <Sprout size={30} color="#FAF7F2" />
-          </div>
-          <div>
-            <span style={{ color: '#FAF7F2', fontWeight: 800, fontSize: 28, letterSpacing: '-0.02em', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>
-              AgriConnect
-            </span>
-            <div style={{ fontSize: 13, color: '#DDA15E', fontWeight: 600, textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}>
-              Demand-Guided Agricultural Intelligence
-            </div>
-          </div>
+      <div className="register-hero-left" style={{ flex: 1, maxWidth: 600, paddingRight: 40, color: '#FAF7F2' }}>
+        <div style={{ marginBottom: 28 }}>
+          <HarvionBrand size={56} textColor="#FAF7F2" subtitle="Demand-Guided Agricultural Intelligence & Loss Prevention" />
         </div>
 
         <h1 style={{
@@ -97,17 +84,8 @@ export default function RegisterPage() {
         margin: '20px 0',
         color: '#FAF7F2',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: 'rgba(45, 106, 79, 0.85)', color: '#FAF7F2',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 800, fontSize: 15, border: '1px solid rgba(255, 255, 255, 0.35)',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-          }}>
-            AC
-          </div>
-          <span style={{ fontSize: 19, fontWeight: 800, color: '#FAF7F2', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>AgriConnect</span>
+        <div style={{ marginBottom: 18 }}>
+          <HarvionBrand size={38} textColor="#FAF7F2" subtitle="Smart Agricultural Intelligence" />
         </div>
         
         <h2 style={{ fontSize: 22, fontWeight: 800, color: '#FAF7F2', marginBottom: 4, textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>Create your free account</h2>

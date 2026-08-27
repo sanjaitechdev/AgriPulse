@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import useAuthStore from '../../store/authStore';
 import useNotificationStore from '../../store/notificationStore';
+import HarvionBrand from '../common/HarvionBrand';
 
 export default function AppShell({ role }) {
   const { user, logout } = useAuthStore();
@@ -94,7 +95,7 @@ export default function AppShell({ role }) {
 
   // Determine current page title
   const currentNav = navItems.find((n) => n.to && location.pathname.startsWith(n.to));
-  const pageTitle = currentNav?.label || (role === 'farmer' ? 'Farmer Hub' : 'AgriPulse');
+  const pageTitle = currentNav?.label || (role === 'farmer' ? 'Farmer Hub' : 'Harvion AI');
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -138,26 +139,8 @@ export default function AppShell({ role }) {
       >
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '16px 14px', boxSizing: 'border-box' }}>
           {/* Brand Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px 16px', borderBottom: '1px solid #EAEFEA' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={{
-                width: 38, height: 38, borderRadius: 12,
-                background: '#234D35', color: '#FAF7F2',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontWeight: 800, fontSize: 16,
-                boxShadow: '0 2px 8px rgba(35, 77, 53, 0.25)',
-              }}>
-                AC
-              </div>
-              <div>
-                <div style={{ fontWeight: 800, fontSize: 18, color: '#1C3624', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                  AgriConnect
-                </div>
-                <div style={{ fontSize: 11, color: '#5C6656', fontWeight: 600 }}>
-                  {role === 'farmer' ? '🌱 Farmer Hub' : role === 'buyer' ? '🏢 Buyer Portal' : '⚡ Admin Panel'}
-                </div>
-              </div>
-            </div>
+          <div style={{ padding: '6px 8px 16px', borderBottom: '1px solid #EAEFEA' }}>
+            <HarvionBrand size={38} subtitle={role === 'farmer' ? '🌱 Farmer Hub' : role === 'buyer' ? '🏢 Buyer Portal' : '⚡ Admin Panel'} />
           </div>
 
           {/* Quick Action Button */}
@@ -307,20 +290,7 @@ export default function AppShell({ role }) {
           >
             {/* Drawer Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 14, borderBottom: '1px solid #F1F5F9' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{
-                  width: 36, height: 36, borderRadius: 10,
-                  background: '#234D35', color: '#FAF7F2',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 800, fontSize: 15,
-                }}>
-                  AC
-                </div>
-                <div>
-                  <div style={{ fontWeight: 800, fontSize: 16, color: '#1C3624' }}>AgriPulse AI</div>
-                  <div style={{ fontSize: 11, color: '#64748B' }}>{user?.name || 'Farmer Portal'}</div>
-                </div>
-              </div>
+              <HarvionBrand size={36} subtitle={user?.name || 'Farmer Portal'} />
               <button
                 onClick={() => setDrawerOpen(false)}
                 style={{ background: 'none', border: 'none', padding: 6, cursor: 'pointer', color: '#64748B' }}
@@ -393,7 +363,7 @@ export default function AppShell({ role }) {
                   cursor: 'pointer',
                 }}
               >
-                <LogOut size={15} /> Sign out from AgriPulse
+                <LogOut size={15} /> Sign out from Harvion AI
               </button>
             </div>
           </div>
