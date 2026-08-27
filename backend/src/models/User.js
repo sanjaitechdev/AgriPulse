@@ -77,8 +77,8 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     { id: this._id, role: this.role },
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRE || '15m' }
+    process.env.JWT_SECRET || 'agripulse_live_jwt_secret_key_2026',
+    { expiresIn: process.env.JWT_EXPIRE || '7d' }
   );
 };
 
@@ -86,8 +86,8 @@ userSchema.methods.generateAccessToken = function () {
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     { id: this._id },
-    process.env.JWT_REFRESH_SECRET,
-    { expiresIn: process.env.JWT_REFRESH_EXPIRE || '7d' }
+    process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || 'agripulse_live_jwt_secret_key_2026',
+    { expiresIn: process.env.JWT_REFRESH_EXPIRE || '30d' }
   );
 };
 
