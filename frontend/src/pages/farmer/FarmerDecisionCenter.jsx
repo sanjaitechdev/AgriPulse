@@ -1679,6 +1679,20 @@ export default function FarmerDecisionCenter() {
           </p>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .decision-form-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .decision-card-metrics {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          .what-if-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

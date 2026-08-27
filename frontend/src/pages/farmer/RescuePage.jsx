@@ -831,12 +831,12 @@ export default function RescuePage() {
             <div style={{
               padding: '14px 24px',
               borderTop: '1px solid #E2E8F0',
-              background: '#F8FAFC',
+              background: '#FAF7F2',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               fontSize: 11,
-              color: 'var(--color-text-secondary)',
+              color: '#64748B',
             }}>
               <span>
                 Data sources: APMC AGMARKNET Feed · Open-Meteo API · AgriConnect Buyer Demand Network

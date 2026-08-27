@@ -82,8 +82,8 @@ export default function MarketPulsePage() {
         <p className="page-subtitle text-sm text-muted">Daily mandi price analysis and supply arrival trends across India</p>
       </div>
 
-      {/* Dual Panel Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 'var(--space-6)' }}>
+      {/* Dual Panel Layout (Responsive) */}
+      <div className="market-pulse-grid" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 'var(--space-6)' }}>
         
         {/* LEFT PANEL: Dynamic Search & Category Filtering */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
@@ -331,6 +331,15 @@ export default function MarketPulsePage() {
         </div>
 
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .market-pulse-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

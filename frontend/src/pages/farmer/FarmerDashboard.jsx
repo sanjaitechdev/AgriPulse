@@ -339,8 +339,8 @@ export default function FarmerDashboard() {
         </div>
       </div>
 
-      {/* ── Main Dashboard 2-Column Section ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 20 }}>
+      {/* ── Main Dashboard 2-Column Section (Responsive) ── */}
+      <div className="dashboard-main-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 20 }}>
         
         {/* Left Column: Active Crop Tracking */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -514,6 +514,20 @@ export default function FarmerDashboard() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .dashboard-main-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .executive-hero-header {
+            padding: 16px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

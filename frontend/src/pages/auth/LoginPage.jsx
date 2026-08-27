@@ -36,7 +36,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{
+    <div className="login-outer-wrapper" style={{
       minHeight: '100vh',
       backgroundImage: 'linear-gradient(180deg, rgba(10, 24, 15, 0.2) 0%, rgba(8, 20, 12, 0.45) 50%, rgba(6, 16, 10, 0.75) 100%), url(/images/farm_bg.jpg)',
       backgroundSize: 'cover',
@@ -48,8 +48,8 @@ export default function LoginPage() {
       boxSizing: 'border-box',
     }}>
       
-      {/* Left Brand & Mission Visual Area */}
-      <div style={{ flex: 1, maxWidth: 600, paddingRight: 40, color: '#FAF7F2' }}>
+      {/* Left Brand & Mission Visual Area (Desktop Only) */}
+      <div className="login-hero-left" style={{ flex: 1, maxWidth: 600, paddingRight: 40, color: '#FAF7F2' }}>
         
         {/* Brand Pill */}
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
@@ -316,6 +316,22 @@ export default function LoginPage() {
 
       </div>
 
+      <style>{`
+        @media (max-width: 960px) {
+          .login-outer-wrapper {
+            padding: 20px 16px !important;
+            justify-content: center !important;
+          }
+          .login-hero-left {
+            display: none !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .login-outer-wrapper {
+            padding: 12px 10px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
