@@ -1037,8 +1037,8 @@ export default function FarmerDecisionCenter() {
             </div>
           </div>
 
-          {/* Main 2-Column Layout */}
-          <div style={{
+          {/* Main 2-Column Layout (Responsive Single Column on Mobile) */}
+          <div className="single-decision-layout-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)',
             gap: 20,
@@ -1136,8 +1136,8 @@ export default function FarmerDecisionCenter() {
                   </div>
                 </div>
 
-                {/* 3 Metric Cards in a row */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                {/* 3 Metric Cards in a row (Responsive) */}
+                <div className="decision-metrics-3col" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
                   <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 12, padding: '14px 12px' }}>
                     <div style={{ fontSize: 10, color: 'var(--color-text-secondary)', marginBottom: 4, fontWeight: 700, textTransform: 'uppercase' }}>EXPECTED NET PROFIT</div>
                     <div style={{ fontWeight: 900, fontSize: 20, color: '#16a34a' }}>
@@ -1164,11 +1164,11 @@ export default function FarmerDecisionCenter() {
               </div>
 
               {/* Profit Engine Cost Analysis Table */}
-              <div className="card card-padding" style={{ border: '1px solid var(--color-border)', background: 'var(--color-surface)' }}>
+              <div className="card card-padding" style={{ border: '1px solid var(--color-border)', background: 'var(--color-surface)', overflow: 'hidden' }}>
                 <h3 style={{ fontSize: 14, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 12, color: 'var(--color-text-primary)' }}>
                   Profit Engine Cost Analysis
                 </h3>
-                <div style={{ border: '1px solid var(--color-border)', borderRadius: 10, overflow: 'hidden', background: 'var(--color-surface)' }}>
+                <div className="table-responsive-container" style={{ border: '1px solid var(--color-border)', borderRadius: 10, overflowX: 'auto', background: 'var(--color-surface)', margin: 0 }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
                     <thead>
                       <tr style={{ background: 'var(--color-surface-2)', borderBottom: '1px solid var(--color-border)' }}>
@@ -1235,7 +1235,7 @@ export default function FarmerDecisionCenter() {
                   Simulate adjustments to prices, volumes, transport costs, and storage wait days to see profit changes in real-time.
                 </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
+                <div className="what-if-controls-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
                   {/* Sliders Block */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     <div>
@@ -1681,6 +1681,12 @@ export default function FarmerDecisionCenter() {
       )}
 
       <style>{`
+        @media (max-width: 900px) {
+          .single-decision-layout-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+        }
         @media (max-width: 768px) {
           .decision-form-grid {
             grid-template-columns: 1fr !important;
@@ -1688,8 +1694,13 @@ export default function FarmerDecisionCenter() {
           .decision-card-metrics {
             grid-template-columns: 1fr 1fr !important;
           }
-          .what-if-grid {
+          .decision-metrics-3col {
             grid-template-columns: 1fr !important;
+            gap: 8px !important;
+          }
+          .what-if-controls-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
           }
         }
       `}</style>

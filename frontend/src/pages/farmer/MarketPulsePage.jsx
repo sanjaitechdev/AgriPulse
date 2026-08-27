@@ -273,13 +273,16 @@ export default function MarketPulsePage() {
             )}
           </div>
 
-          {/* Mandi Arrivals Table */}
+          {/* Mandi Arrivals List (Table on Desktop, Sleek Cards on Mobile) */}
           {pricesData && pricesData.length > 0 ? (
-            <div className="card glass" style={{ border: '1px solid var(--color-surface-3)', borderRadius: 12, overflow: 'hidden' }}>
-              <div className="card-header" style={{ padding: '12px 16px', background: 'var(--color-surface-2)', borderBottom: '1px solid var(--color-surface-3)' }}>
+            <div className="card glass" style={{ border: '1px solid var(--color-surface-3)', borderRadius: 14, overflow: 'hidden' }}>
+              <div className="card-header" style={{ padding: '14px 18px', background: 'var(--color-surface-2)', borderBottom: '1px solid var(--color-surface-3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3 className="font-bold text-xs" style={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>Recent Mandi Arrivals</h3>
+                <span style={{ fontSize: 11, color: '#64748B', fontWeight: 600 }}>{pricesData.length} Mandi Reports</span>
               </div>
-              <div className="table-wrapper" style={{ maxHeight: 200, overflowY: 'auto' }}>
+
+              {/* Desktop Table View */}
+              <div className="table-wrapper desktop-mandi-table" style={{ maxHeight: 280, overflowY: 'auto' }}>
                 <table className="table" style={{ fontSize: 12 }}>
                   <thead>
                     <tr>
@@ -306,6 +309,60 @@ export default function MarketPulsePage() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile Card List View */}
+              <div className="mobile-mandi-cards" style={{ display: 'none', flexDirection: 'column', gap: 10, padding: 12 }}>
+                {pricesData.map((p, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: '#FFFFFF',
+                      border: '1.5px solid #E2E8F0',
+                      borderRadius: 12,
+                      padding: '12px 14px',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.03)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
+                      <div>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: '#0F172A' }}>{p.market}</div>
+                        <div style={{ fontSize: 11, color: '#64748B', display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
+                          <span>📍 {p.district}</span>
+                          <span>•</span>
+                          <span>{p.estimatedDistanceKm ? `${p.estimatedDistanceKm} km` : 'Local Mandi'}</span>
+                        </div>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: 16, fontWeight: 900, color: 'var(--color-primary)' }}>
+                          ₹{p.modalPrice?.toLocaleString('en-IN')}<span style={{ fontSize: 10, color: '#64748B', fontWeight: 600 }}>/q</span>
+                        </div>
+                        <div style={{ fontSize: 9, color: '#16A34A', fontWeight: 700 }}>Modal Rate</div>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      background: '#FAF7F2',
+                      padding: '6px 10px',
+                      borderRadius: 8,
+                      fontSize: 11,
+                      border: '1px solid #E8EFE9',
+                    }}>
+                      <div style={{ color: '#DC2626', fontWeight: 600 }}>
+                        Min: ₹{p.minPrice?.toLocaleString('en-IN')}
+                      </div>
+                      <div style={{ color: '#16A34A', fontWeight: 600 }}>
+                        Max: ₹{p.maxPrice?.toLocaleString('en-IN')}
+                      </div>
+                      <div style={{ color: '#64748B' }}>
+                        {new Date(p.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ) : (
@@ -337,6 +394,14 @@ export default function MarketPulsePage() {
           .market-pulse-grid {
             grid-template-columns: 1fr !important;
             gap: 16px !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .desktop-mandi-table {
+            display: none !important;
+          }
+          .mobile-mandi-cards {
+            display: flex !important;
           }
         }
       `}</style>
