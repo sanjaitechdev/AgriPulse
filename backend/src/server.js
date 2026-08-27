@@ -221,49 +221,51 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`   Client:      ${process.env.CLIENT_URL}`);
   console.log(`   Docs:        http://localhost:${PORT}/health\n`);
 
-  // Spawn Python AI Service in the background
-  try {
-    const { spawn } = require('child_process');
-    const path = require('path');
-    const fs = require('fs');
-    const aiServiceDir = path.resolve(__dirname, '../../ai-service');
-    const logFile = fs.createWriteStream(path.resolve(__dirname, '../spawn.log'), { flags: 'a' });
-    
-    console.log(`🚀 Spawning Python AI Service in ${aiServiceDir}...`);
-    
-    const spawnPython = (index = 0) => {
-      const binaries = ['py', 'python', 'python3'];
-      if (index >= binaries.length) {
-        fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `🔴 All python binaries failed to spawn.\n`);
-        return;
-      }
-      const bin = binaries[index];
-      console.log(`   Trying to spawn with '${bin}'...`);
-      const aiProcess = spawn(bin, ['-m', 'uvicorn', 'main:app', '--host', '0.0.0.0', '--port', '8001'], {
-        cwd: aiServiceDir,
-        shell: true
-      });
-
-      aiProcess.stdout.pipe(logFile);
-      aiProcess.stderr.pipe(logFile);
-
-      aiProcess.on('error', (err) => {
-        fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `🔴 Spawn error for ${bin}: ${err.message}\n`);
-      });
-
-      aiProcess.on('exit', (code) => {
-        if (code === 9009 || code === 1) {
-          fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `⚠️ '${bin}' binary unavailable (code ${code}). Trying next launcher...\n`);
-          spawnPython(index + 1);
-        } else {
-          fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `🔴 Python AI Service (${bin}) exited with code ${code}\n`);
+  // Spawn Python AI Service in the background (Local Development only)
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      const { spawn } = require('child_process');
+      const path = require('path');
+      const fs = require('fs');
+      const aiServiceDir = path.resolve(__dirname, '../../ai-service');
+      const logFile = fs.createWriteStream(path.resolve(__dirname, '../spawn.log'), { flags: 'a' });
+      
+      console.log(`🚀 Spawning Python AI Service in ${aiServiceDir}...`);
+      
+      const spawnPython = (index = 0) => {
+        const binaries = ['py', 'python', 'python3'];
+        if (index >= binaries.length) {
+          fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `🔴 All python binaries failed to spawn.\n`);
+          return;
         }
-      });
-    };
+        const bin = binaries[index];
+        console.log(`   Trying to spawn with '${bin}'...`);
+        const aiProcess = spawn(bin, ['-m', 'uvicorn', 'main:app', '--host', '0.0.0.0', '--port', '8001'], {
+          cwd: aiServiceDir,
+          shell: true
+        });
 
-    spawnPython(0);
-  } catch (err) {
-    console.error('🔴 Error attempting to spawn Python AI Service:', err.message);
+        aiProcess.stdout.pipe(logFile);
+        aiProcess.stderr.pipe(logFile);
+
+        aiProcess.on('error', (err) => {
+          fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `🔴 Spawn error for ${bin}: ${err.message}\n`);
+        });
+
+        aiProcess.on('exit', (code) => {
+          if (code === 9009 || code === 1) {
+            fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `⚠️ '${bin}' binary unavailable (code ${code}). Trying next launcher...\n`);
+            spawnPython(index + 1);
+          } else {
+            fs.appendFileSync(path.resolve(__dirname, '../spawn.log'), `🔴 Python AI Service (${bin}) exited with code ${code}\n`);
+          }
+        });
+      };
+
+      spawnPython(0);
+    } catch (err) {
+      console.warn('⚠️  Could not auto-spawn Python AI service:', err.message);
+    }
   }
 });
 
