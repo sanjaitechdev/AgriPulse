@@ -1,35 +1,47 @@
 import React from 'react';
 
-export default function HarvionBrand({ size = 38, showText = true, textColor = '#1C3624', subtitle = null, className = '' }) {
+export default function HarvionBrand({ size = 38, showText = true, textColor = '#1C3624', subtitle = null, className = '', variant = 'badge' }) {
+  // If full master banner is requested
+  if (variant === 'full') {
+    return (
+      <div className={`harvion-brand-container ${className}`} style={{ display: 'inline-flex', alignItems: 'center' }}>
+        <img
+          src="/images/harvion_master_logo.jpg"
+          alt="HARVION AI — Agricultural Intelligence"
+          style={{ height: size, width: 'auto', borderRadius: 8, objectFit: 'contain' }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`harvion-brand-container ${className}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-      {/* ── 3D Faceted Emerald & Gold Emblem ── */}
+      {/* ── Harvion AI Square Badge (Emblem + Name) ── */}
       <div style={{
         width: size,
         height: size,
-        borderRadius: Math.round(size * 0.28),
+        borderRadius: Math.round(size * 0.26),
         overflow: 'hidden',
-        boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(82, 183, 136, 0.35)',
-        background: '#0B1E13',
+        boxShadow: '0 3px 10px rgba(0, 0, 0, 0.22)',
+        border: '1.5px solid rgba(82, 183, 136, 0.4)',
+        background: '#0F2417',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
-        position: 'relative',
       }}>
         <img
-          src="/images/harvion_symbol.jpg"
-          alt="Harvion AI Logo"
+          src="/images/harvion_badge.jpg"
+          alt="Harvion AI"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transform: 'scale(1.02)',
           }}
         />
       </div>
 
-      {/* ── Brand Typography: Clean, Solid Professional Text ── */}
+      {/* ── Brand Typography ── */}
       {showText && (
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
           <div style={{
@@ -39,16 +51,10 @@ export default function HarvionBrand({ size = 38, showText = true, textColor = '
             letterSpacing: '-0.02em',
             display: 'flex',
             alignItems: 'center',
-            gap: 5,
+            gap: 6,
           }}>
             <span>HARVION</span>
-            <span style={{
-              fontWeight: 900,
-              opacity: 0.95,
-              color: textColor === '#FAF7F2' ? '#88D49E' : '#2D6A4F',
-            }}>
-              AI
-            </span>
+            <span style={{ fontWeight: 900, color: textColor === '#FAF7F2' ? '#88D49E' : '#2D6A4F' }}>AI</span>
           </div>
           {subtitle && (
             <div style={{
